@@ -1,0 +1,56 @@
+<div class="row mt-5 mb-3 justify-content-between align-items-center animated fadeIn fast">
+    <div class="col-6">
+        <h1>Héroes</h1>
+    </div>
+    <div class="col-6 text-right">
+        <button class="btn btn-success" routerLink="/heroe/nuevo">
+            <i class="fas fa-plus-circle"></i>
+            Agregar
+        </button>
+    </div>
+</div>
+
+  <!-- ==== loading ==== -->
+  <div *ngIf="cargando" class=" row mt-5">
+    <div class="col mt-5">
+        <span class="loader"></span>
+    </div>
+</div>
+<!-- ==== loading ==== -->
+
+<table *ngIf="!cargando && heroes.length > 0" class="table animated fadeIn">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Poder</th>
+        <th scope="col">Estado</th>
+        <th scope="col">Config</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let heroe of heroes; let idx = index" >
+        <th scope="row">{{ idx + 1 }}</th>
+        <td>{{ heroe.nombre }}</td>
+        <td>{{ heroe.poder }}</td>
+        <td>
+          <span *ngIf="heroe.vivo" class="badge badge-success">Vivo</span>
+          <span *ngIf="!heroe.vivo" class="badge badge-danger">Muerto</span>
+        </td>
+        <td>
+          <i class="far fa-edit mr-3 text-info puntero" [routerLink]="['/heroe', heroe.id]"></i>
+          <i class="far fa-trash-alt text-danger puntero" (click)="eliminarHeroe( heroe, idx )"></i>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+    <!-- ==== sin resultados ==== -->
+    <div *ngIf="heroes.length === 0 && cargando === false" class="row mt-5">
+        <div class="col text-center mt-5">
+            <h4>No hay ningún héroe registrado</h4>
+            <i class="fas fa-database fa-4x mt-2"></i>
+        </div>
+    </div>
+
+
